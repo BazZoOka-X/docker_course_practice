@@ -1,0 +1,26 @@
+version: 2
+
+sources:
+  - name: demo_src
+    description: "Source data from flights database"
+    schema: demo_src
+    
+    tables:
+      - name: aircrafts
+        description: "Aircrafts data table"
+      - name: airports
+        description: "airports data table"
+      - name: seats
+        description: "Aircrafts data table"
+      - name: bookings
+        description: "Брониорование"
+        columns:
+          - name: book_ref
+          - name: book_date
+            description: "Дата брониорования"
+          - name: total_amount
+        freshness: 
+          warn_after: {count: 6, period: hour}
+          error_after: {count: 10000, period: day}
+          filter: current_timestamp::date-book_date::date<30000
+        loaded_at_field: book_date::timestamp

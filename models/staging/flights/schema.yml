@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: stg_flights__aircrafts
+    description: "Staging model for aircrafts data"
+    columns:
+      - name: aircraft_code
+        description: "Unique aircraft code"
+        tests:
+          - not_null
+          - unique
+      - name: range
+        description: "Aircraft range in kilometers"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('other_model')
+              field: aircraft_code
